@@ -1,0 +1,5 @@
+#!C:\Users\kodey\OneDrive\Documents\Projects\D2 Website\D2 Website\env\Scripts\python.exe
+from django.core import management
+
+if __name__ == "__main__":
+    management.execute_from_command_line()
