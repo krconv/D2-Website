@@ -40,7 +40,7 @@ MANAGERS = ADMINS
 # Application definition
 
 INSTALLED_APPS = [
-    'pages',
+    'pages.app.PagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -135,4 +135,4 @@ STATIC_URL = '/~d2/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # FastCGI Configuration from http://support.hostgator.com/articles/django-with-fastcgi
-FORCE_SCRIPT_NAME = "/~d2/"
+#FORCE_SCRIPT_NAME = "/~d2/"

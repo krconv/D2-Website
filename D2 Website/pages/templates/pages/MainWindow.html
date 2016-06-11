@@ -1,20 +1,72 @@
-﻿<!DOCTYPE html>
-
+﻿{% load static %}
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <style>
+        body, html {
+            font-size: 20px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        body {
+            border: 2px solid black;
+            padding: 5px;
+            margin: 10px;
+            width: 65vw;
+        }
+        header > h1 {
+            line-height: 30px;
+            margin-left: 50px;
+            font-size: 3rem;
+        }
+        nav > span a {
+            padding:2px 3px 2px 3px;
+            margin:2px;
+            font-size: 1.2rem;
+            color: #6A195E;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        
+        li {
+            list-style: circle;
+        }   
+        nav > span a:hover {
+            background-color: #6A195E;
+            color: white;
+            font-weight: 800;
+        }
+
+        nav {
+            margin: 10px 10px 0px 10px;
+            padding: 5px;
+            border: 2px solid black;
+        }
+    </style>
     <title>D2 Website</title>
 </head>
 <body>
-    <h1>D2 Website</h1>
+    <header>
+        <h1>D2 Website</h1>
+    </header>
+    <nav>
+        <span><a href="{% url 'home' %}">News</a></span>
+        <span><a href="{% url 'useful_links' %}">Useful Links</a></span>
+        <span><a href="">Meet Your RAs</a></span>
+        <span><a href="">Contact Us</a></span>
+    </nav>
+    {% block content %}
+    <p><img src="{% static "images/dexter.png" %}" style="float: right;" alt="A happy welcome from Dexter of Cartoon Network." title="Welcome!"/></p>
     <p>
-        Welcome to the D2 Website! This site will soon be the home to some useful information for Daniel's Residents.
-        <ul>
-            <li>A way to contact your RAs.</li>
-            <li>A way to virtually meet your RAs.</li>
-            <li>A buliten board containing events on campus.</li>
-            <li>A live tracker to see which RA is on-duty now.</li>
-        </ul>
+        Welcome to the <abbr title="Daniels Hall floor Two">D2</abbr> Website! This site will soon be the home to some useful information for Daniel's Residents.
+    <ul>
+        <li>A way to contact your RAs.</li>
+        <li>A way to virtually meet your RAs.</li>
+        <li>A buliten board containing events on campus.</li>
+        <li>A live tracker to see which RA is on-duty now.</li>
+    </ul>
     </p>
+    {% endblock %}
+    <footer>Brought to you by <a href="http://www.wpi.edu/offices/rso.html" target="_blank">WPI Residential Services</a></footer>
 </body>
 </html>
