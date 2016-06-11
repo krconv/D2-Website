@@ -43,6 +43,9 @@
     <Compile Include="d2\__init__.py" />
     <Compile Include="manage.py" />
     <Compile Include="pages\admin.py" />
+    <Compile Include="pages\app.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="pages\migrations\__init__.py" />
     <Compile Include="pages\models.py" />
     <Compile Include="pages\tests.py" />
@@ -53,7 +56,10 @@
   <ItemGroup>
     <Content Include="d2\d2\__pycache__\settings.cpython-34.pyc" />
     <Content Include="d2\d2\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="pages\static\images\dexter.png" />
+    <Content Include="pages\templates\pages\ContactUs.html" />
     <Content Include="pages\templates\pages\MainWindow.html" />
+    <Content Include="pages\templates\pages\UsefulLinks.html" />
     <Content Include="requirements.txt" />
     <Content Include="static\admin\css\base.css" />
     <Content Include="static\admin\css\changelists.css" />
@@ -124,6 +130,8 @@
     <Folder Include="d2\d2\__pycache__\" />
     <Folder Include="pages\" />
     <Folder Include="pages\migrations\" />
+    <Folder Include="pages\static\" />
+    <Folder Include="pages\static\images\" />
     <Folder Include="pages\templates\" />
     <Folder Include="pages\templates\pages\" />
     <Folder Include="static\" />
