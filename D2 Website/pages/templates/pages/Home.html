@@ -1,11 +1,12 @@
-{% extends "pages\MainWindow.html" %}
+{% extends "pages/MainWindow.html" %}
+{% block title %}Home - D2 Website{% endblock %}
+
 {% load staticfiles %}
 
-{% block title %}D2 News{% endblock %}
 {% block content %}
 <p><img src="{% static "images/dexter.png" %}" style="float: right;" alt="A happy welcome from Dexter of Cartoon Network." title="Welcome!" usemap="#dexter_map"/></p>
 <p>
-    Welcome to the <abbr title="Daniels Hall floor Two">D2</abbr> Website! This site will soon be the home to some useful information for Daniel's Residents.
+    Welcome to the <abbr title="Daniels Hall Floor Two">D2</abbr> Website! This site will soon be the home to some useful information for Daniel's Residents.
 </p>
 <ul>
     <li>A way to contact your RAs.</li>
