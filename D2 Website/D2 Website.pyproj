@@ -57,8 +57,11 @@
     <Content Include="d2\d2\__pycache__\settings.cpython-34.pyc" />
     <Content Include="d2\d2\__pycache__\__init__.cpython-34.pyc" />
     <Content Include="pages\static\images\dexter.png" />
+    <Content Include="pages\static\images\mouse.png" />
+    <Content Include="pages\static\style.css" />
     <Content Include="pages\templates\pages\ContactUs.html" />
     <Content Include="pages\templates\pages\MainWindow.html" />
+    <Content Include="pages\templates\pages\News.html" />
     <Content Include="pages\templates\pages\UsefulLinks.html" />
     <Content Include="requirements.txt" />
     <Content Include="static\admin\css\base.css" />
