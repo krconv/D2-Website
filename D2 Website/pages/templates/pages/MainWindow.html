@@ -1,4 +1,4 @@
-{% load staticfiles %}
+﻿{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -13,11 +13,11 @@
     <nav>
         <span><a href="{% url 'home' %}">Home</a></span>
         <span><a href="{% url 'useful_links' %}">Useful Links</a></span>
-        <span><a href="">Meet Your RAs</a></span>
+        <span><a href="{% url 'meet_us' %}">Meet Us</a></span>
         <span><a href="{% url 'contact_us' %}">Contact Us</a></span>
     </nav>
     {% block content %}
     {% endblock %}
-    <footer>Brought to you by <a href="http://www.wpi.edu/offices/rso.html" target="_blank">WPI Residential Services</a></footer>
+    <footer>Currently under contruction.</footer>
 </body>
 </html>

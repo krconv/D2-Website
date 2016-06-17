@@ -61,7 +61,8 @@
     <Content Include="pages\static\style.css" />
     <Content Include="pages\templates\pages\ContactUs.html" />
     <Content Include="pages\templates\pages\MainWindow.html" />
-    <Content Include="pages\templates\pages\News.html" />
+    <Content Include="pages\templates\pages\MeetUs.html" />
+    <Content Include="pages\templates\pages\Home.html" />
     <Content Include="pages\templates\pages\UsefulLinks.html" />
     <Content Include="requirements.txt" />
     <Content Include="static\admin\css\base.css" />
