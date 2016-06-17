@@ -1,7 +1,7 @@
 ﻿
 body, html {
     font-size: 20px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body {
     border: 2px solid black;
@@ -36,4 +36,16 @@ nav {
     margin: 10px 10px 0px 10px;
     padding: 5px;
     border: 2px solid black;
+}
+
+footer::before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 20px 10px 5px;
+    background: black;
+}
+
+footer {
+    font-size: small;
 }
