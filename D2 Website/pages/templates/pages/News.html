@@ -1,0 +1,19 @@
+{% extends "pages\MainWindow.html" %}
+{% load staticfiles %}
+
+{% block title %}D2 News{% endblock %}
+{% block content %}
+<p><img src="{% static "images/dexter.png" %}" style="float: right;" alt="A happy welcome from Dexter of Cartoon Network." title="Welcome!" usemap="#dexter_map"/></p>
+<p>
+    Welcome to the <abbr title="Daniels Hall floor Two">D2</abbr> Website! This site will soon be the home to some useful information for Daniel's Residents.
+</p>
+<ul>
+    <li>A way to contact your RAs.</li>
+    <li>A way to virtually meet your RAs.</li>
+    <li>A buliten board containing events on campus.</li>
+    <li>A live tracker to see which RA is on-duty now.</li>
+</ul>
+<map name="dexter_map">
+    <area alt="Dexter's Hand'" title="Secret Website" href="http://krconv.com" shape="poly" coords="235,127,243,158,256,148,262,158,269,168,274,162,266,148,284,162,289,159,288,153,278,146,271,141,274,140,295,141,298,137,293,134,281,131,272,131,264,133,259,122,254,114,250,114,250,122,254,131,255,137" style="outline:none;" target="_blank" />
+</map>
+{% endblock %}

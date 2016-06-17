@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home_page(request):
-    return render(request, "pages/MainWindow.html");
+    return render(request, "pages/News.html");
 
 def links_page(request):
     return render(request, "pages/UsefulLinks.html");
