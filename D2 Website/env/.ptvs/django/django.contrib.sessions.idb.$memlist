@@ -1,8 +1,8 @@
-backends
+exceptions
 apps
 management
 middleware
-exceptions
+backends
 serializers
 models
 migrations

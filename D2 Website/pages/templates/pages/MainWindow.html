@@ -4,9 +4,26 @@
 <head>
     <meta charset="utf-8" />
     <link href="{% static "style.css"%}" type="text/css" rel="stylesheet"/>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title><script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+    <script>
+        function GetRAOnDutyInfo()
+        {
+            ajaxGet("{% url "duty" %}", { }, function(content) {
+                var message = content["name"];
+                if (content.hasOwnProperty("phone")) {
+                    message += " (" + content["phone"] + ")";
+                }
+                $("#DutyContent").text(message);
+            });
+        }
+    </script>
 </head>
-<body>
+<body onload="GetRAOnDutyInfo();">
+    <div id="DutyDisplay">
+        Who's on duty?
+        <p id="DutyContent">Loading...</p>
+    </div>
     <header>
         <h1>D2 Website</h1>
     </header>

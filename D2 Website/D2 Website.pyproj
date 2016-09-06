@@ -8,12 +8,14 @@
     <InterpreterVersion>3.4</InterpreterVersion>
     <PublishUrl>ftp://d2:D2istheb0mb@ccc.wpi.edu/d2</PublishUrl>
     <NameOfLastUsedPublishProfile>WPI Storage</NameOfLastUsedPublishProfile>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>91e8977b-7725-4f52-a85b-76291c7eda8a</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
+    <ProjectHome>
+    </ProjectHome>
     <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <StartupFile>manage.py</StartupFile>
     <SearchPath>
@@ -58,13 +60,30 @@
     <Compile Include="pages\urls.py" />
     <Compile Include="pages\views.py" />
     <Compile Include="pages\__init__.py" />
+    <Compile Include="tools\admin.py" />
+    <Compile Include="tools\app.py" />
+    <Compile Include="tools\migrations\__init__.py" />
+    <Compile Include="tools\models.py" />
+    <Compile Include="tools\duty_display.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tools\tests.py" />
+    <Compile Include="tools\urls.py" />
+    <Compile Include="tools\views.py" />
+    <Compile Include="tools\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="d2\d2\__pycache__\settings.cpython-34.pyc" />
     <Content Include="d2\d2\__pycache__\__init__.cpython-34.pyc" />
-    <Content Include="pages\static\images\dexter.png" />
-    <Content Include="pages\static\images\mouse.png" />
-    <Content Include="pages\static\style.css" />
+    <Content Include="pages\static\finding-nemo-font.ttf">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\images\marvin.png">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\style.css">
+      <Publish>True</Publish>
+    </Content>
     <Content Include="pages\templates\pages\ContactUs.html" />
     <Content Include="pages\templates\pages\MainWindow.html" />
     <Content Include="pages\templates\pages\MeetUs.html" />
@@ -133,6 +152,11 @@
     <Content Include="static\admin\js\SelectFilter2.js" />
     <Content Include="static\admin\js\timeparse.js" />
     <Content Include="static\admin\js\urlify.js" />
+    <Content Include="tools\client_secret.json" />
+    <Content Include="Web.WPI Storage.config">
+      <SubType>Content</SubType>
+      <DependentUpon>C:\Users\kodey\OneDrive\Documents\Projects\D2 Website\D2 Website\web.config</DependentUpon>
+    </Content>
     <None Include="WPI Storage.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +176,8 @@
     <Folder Include="static\admin\img\gis\" />
     <Folder Include="static\admin\js\" />
     <Folder Include="static\admin\js\admin\" />
+    <Folder Include="tools\" />
+    <Folder Include="tools\migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

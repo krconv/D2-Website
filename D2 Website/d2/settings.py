@@ -38,9 +38,11 @@ ADMINS = (("Kodey Converse", 'krconverse@wpi.edu'))
 MANAGERS = ADMINS
 
 # Application definition
-
 INSTALLED_APPS = [
     'pages.app.PagesConfig',
+    'tools.app.ToolsConfig',
+    'django_cas_ng',
+    'django_ajax',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +60,13 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_cas_ng.middleware.CASMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+)
 
 ROOT_URLCONF = 'd2.urls'
 
@@ -80,6 +88,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'd2.wsgi.application'
 
+# CAS Authentication Settings
+# https://github.com/castlabs/django-cas
+CAS_SERVER_URL = 'https://cas.wpi.edu/cas/'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
