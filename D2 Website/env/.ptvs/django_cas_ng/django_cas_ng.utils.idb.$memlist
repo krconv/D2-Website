@@ -1,0 +1,13 @@
+urllib_parse
+CASClient
+REDIRECT_FIELD_NAME
+get_user_from_session
+get_redirect_url
+load_backend
+AnonymousUser
+SESSION_KEY
+get_cas_client
+get_service_url
+BACKEND_SESSION_KEY
+get_protocol
+django_settings

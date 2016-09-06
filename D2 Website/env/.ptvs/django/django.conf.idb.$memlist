@@ -3,7 +3,7 @@ time
 BaseSettings
 locale
 ENVIRONMENT_VARIABLE
-urls
+app_template
 os
 Settings
 six
@@ -15,5 +15,5 @@ importlib
 LazyObject
 UserSettingsHolder
 warnings
-app_template
+urls
 empty

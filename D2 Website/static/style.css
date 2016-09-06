@@ -1,9 +1,14 @@
-﻿
-body, html {
+﻿html {
     font-size: 20px;
     font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-image: url("//cdn.paper4pc.com/images/underwater-wallpaper-1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
+
 body {
+    background-color: whitesmoke;
     border: 2px solid black;
     padding: 15px;
     margin: 10px;
@@ -15,19 +20,44 @@ header > h1 {
     font-size: 3rem;
 }
 nav > span a {
+    font-family: finding-nemo-font, inherit;
     padding:2px 3px 2px 3px;
     margin:2px;
-    font-size: 1.2rem;
-    color: #6A195E;
+    font-size: 36px;
+    color: #ec7030;
     font-weight: 800;
     text-decoration: none;
 }
-        
+
+#DutyDisplay {
+    background-color: white;
+    float: right;
+    margin: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    height: 60px;
+    width: 300px;
+    border: 1px solid black;
+}
+
+#DutyContent {
+    font-size: 18px;
+    font-weight: normal;
+}
+
 li {
     list-style: circle;
-}   
+}
+
+.completed::after{
+    color: grey;
+    font-size: smaller;
+    content: " (done!)"
+}
+
 nav > span a:hover {
-    background-color: #6A195E;
+    background-color: #ec7030;
     color: white;
     font-weight: 800;
 }
@@ -38,14 +68,11 @@ nav {
     border: 2px solid black;
 }
 
-footer::before {
-    content: "";
-    display: block;
-    height: 1px;
-    margin: 20px 10px 5px;
-    background: black;
-}
-
 footer {
     font-size: small;
+}
+
+@font-face {
+	font-family: finding-nemo-font;
+	src: url("finding-nemo-font.ttf");
 }

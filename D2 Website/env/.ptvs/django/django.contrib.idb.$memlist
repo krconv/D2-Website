@@ -4,13 +4,13 @@ gis
 contenttypes
 postgres
 admindocs
-admin
+webdesign
 sitemaps
 sessions
 auth
 humanize
 flatpages
 redirects
-webdesign
+admin
 syndication
 messages

@@ -7,12 +7,12 @@ geos
 serializers
 geometry
 default_app_config
-shortcuts
 db
+shortcuts
 gdal
 utils
+geoip
 admin
 measure
-geoip
 sitemaps
 management
