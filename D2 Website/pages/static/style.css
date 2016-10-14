@@ -50,7 +50,7 @@ nav > span::after {
     border: 1px solid black;
 }
 
-#DutyContent {
+#DutyDisplay > span {
     font-size: 18px;
     font-weight: normal;
 }

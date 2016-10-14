@@ -13,11 +13,20 @@
         function GetRAOnDutyInfo()
         {
             ajaxGet("{% url "duty" %}", { }, function(content) {
-                var message = content["name"];
-                if (content.hasOwnProperty("phone")) {
-                    message += " (" + content["phone"] + ")";
+                var message = ""
+                if (content.hasOwnProperty("name")) {
+                    message += content["name"];
+                    if (content.hasOwnProperty("phone")) {
+                        message += " (" + content["phone"] + ")";
+                    }
+                } else if (content.hasOwnProperty("info")) {
+                    message += content["info"];
                 }
-                $("#DutyContent").text(message);
+                if (message) {
+                    $("#DutyDisplay > span").text(message);
+                } else {
+                    $("#DutyDisplay").slideUp();
+                }
             });
         }
         $( document ).ready(GetRAOnDutyInfo);
@@ -28,7 +37,7 @@
     <div id="DutyDisplay">
         Who's on duty?
         <br />
-        <span id="DutyContent">Loading...</span>
+        <span>Loading...</span>
     </div>
     <header>
         <h1>D2 Website</h1>
