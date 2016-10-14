@@ -44,41 +44,14 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def name_on_duty():
-    """
-    Returns: the name and phone number of the RA that is on duty.
-    """
+def get_spreadsheet(spreadsheet_id, range):
+    "Gets the data from a Google Spreadsheet using it's ID and range."
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                     'version=v4')
     service = discovery.build('sheets', 'v4', http=http,
-                              discoveryServiceUrl=discoveryUrl)
-
-    spreadsheetId = '1uTsIJftqI_VyIVY-oFxwOJ9zsTGG4tBdkO1wHwEocp0'
-    rangeName = 'Fall!A2:H'
+                                discoveryServiceUrl=discoveryUrl)
     spreadsheet = service.spreadsheets().values().get(
-        spreadsheetId=spreadsheetId, range=rangeName).execute()
-    values = spreadsheet.get('values', []) # contains all of the data
-    today = '{dt.month}/{dt.day}/{dt.year}'.format(dt = datetime.datetime.now() - datetime.timedelta(hours=12))
-    for i in range(0, len(values)):
-        # go through each of the date rows until today is found
-        if (len(values[i]) > 0): # not a padding row
-            if ("Date" in values[i][0]):
-                for j in range(1, len(values[i])):
-                    if today in values[i][j]: # found todays schedule
-                        data = values[i + 1][j].replace('(', '').replace(')', '').strip() # the duty data for daniels for today
-                        result = { }
-                        # parse todays duty for a phone number and name
-                        if (len(data) == 0): # no one is on duty
-                            result["name"] = "No RA On-Duty"
-                            result["phone"] = "508-556-0494"
-                        elif (data[-5] == "x"): # a singular person is on with a WPI phone
-                            result["name"] = data[:-6]
-                            result["phone"] = "508-831-" + data[-4:]
-                        elif (len(data) > 12 and '-' in data[-12:] and not "All" in data): # a singular person with a cell phone
-                            result["name"] = data[:-13]
-                            result["phone"] = data[-12:]
-                        else: # multiple people 
-                            result["name"] = data
-                        return result
+        spreadsheetId=spreadsheet_id, range=sheet_range).execute()
+    return spreadsheet.get('values', []) # contains all of the data
