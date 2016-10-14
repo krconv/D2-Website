@@ -1,3 +1,4 @@
+absolute_import
 CompletionCommand
 Command
 BASE_COMPLETION

@@ -9,6 +9,7 @@
     <PublishUrl>ftp://d2:D2istheb0mb@ccc.wpi.edu/d2</PublishUrl>
     <NameOfLastUsedPublishProfile>WPI Storage</NameOfLastUsedPublishProfile>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <PythonDebugWebServerCommandArguments>runserver --noreload %SERVER_PORT% $(CommandLineArguments)</PythonDebugWebServerCommandArguments>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -85,6 +86,7 @@
       <Publish>True</Publish>
     </Content>
     <Content Include="pages\templates\pages\ContactUs.html" />
+    <Content Include="pages\templates\pages\CaptureTheFlag.html" />
     <Content Include="pages\templates\pages\MainWindow.html" />
     <Content Include="pages\templates\pages\MeetUs.html" />
     <Content Include="pages\templates\pages\Home.html" />
@@ -163,6 +165,7 @@
     <Folder Include="d2\" />
     <Folder Include="d2\d2\" />
     <Folder Include="d2\d2\__pycache__\" />
+    <Folder Include="middlware\" />
     <Folder Include="pages\" />
     <Folder Include="pages\migrations\" />
     <Folder Include="pages\static\" />

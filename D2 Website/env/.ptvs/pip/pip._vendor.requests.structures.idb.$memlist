@@ -1,6 +1,4 @@
 collections
-IteratorProxy
-islice
-LookupDict
-os
 CaseInsensitiveDict
+OrderedDict
+LookupDict

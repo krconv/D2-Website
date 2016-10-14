@@ -3,8 +3,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name=viewport content='width=700'>
     <link href="{% static "style.css"%}" type="text/css" rel="stylesheet"/>
-    <title>{% block title %}{% endblock %}</title><script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+    {% block scripts %}
+    <script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
     <script>
         function GetRAOnDutyInfo()
@@ -17,24 +20,29 @@
                 $("#DutyContent").text(message);
             });
         }
+        $( document ).ready(GetRAOnDutyInfo);
     </script>
+    {% endblock %}
 </head>
-<body onload="GetRAOnDutyInfo();">
+<body>
     <div id="DutyDisplay">
         Who's on duty?
-        <p id="DutyContent">Loading...</p>
+        <br />
+        <span id="DutyContent">Loading...</span>
     </div>
     <header>
         <h1>D2 Website</h1>
     </header>
     <nav>
         <span><a href="{% url 'home' %}">Home</a></span>
+        <span><a href="{% url 'ctf' %}">Capture The Flag</a></span>
         <span><a href="{% url 'useful_links' %}">Useful Links</a></span>
         <span><a href="{% url 'meet_us' %}">Meet Us</a></span>
         <span><a href="{% url 'contact_us' %}">Contact Us</a></span>
     </nav>
     {% block content %}
     {% endblock %}
+    <hr />
     <footer>Currently under contruction.</footer>
 </body>
 </html>

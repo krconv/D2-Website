@@ -2,11 +2,11 @@ writer
 six
 uuid4
 encode_multipart_formdata
-BytesIO
+absolute_import
 b
-iter_field_objects
-mimetypes
+choose_boundary
 codecs
 RequestField
+BytesIO
 iter_fields
-choose_boundary
+iter_field_objects

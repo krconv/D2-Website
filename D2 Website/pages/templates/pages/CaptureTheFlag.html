@@ -1,0 +1,243 @@
+{% extends "pages/MainWindow.html" %}
+
+{% block title %}Capture The Flag - D2 Website{% endblock %}
+
+{% load staticfiles %}
+
+{% block scripts %}
+{{ block.super }}
+<style>
+    #map {
+        height: 800px;
+        width: 800px;
+        max-width: 100%
+    }
+    #author {
+        color: grey;
+        font-size: smaller;
+    }
+</style>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDny2mwP0t9EIUHwvxF8vUvxHwy2I7aQQY&callback=initMap" type="text/javascript"></script>
+<script>
+    var map;
+    var redBoundry, blueBoundry;
+    var redRespawnPoint, blueRespawnPoint;
+    var allowedBounds;
+    var lastValidCenter;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 42.274472, lng: -71.807771 },
+            zoom: 18,
+            mapTypeId: 'hybrid',
+            tilt: 0,
+            rotateControl: false
+        });
+        showBoundries();
+        showRespawnPoints();
+        limitPanning();
+    }
+    function showBoundries() {
+        var redBoundryPoints = [
+            { lat: 42.27449035800314, lng: -71.80794132027245 },
+            { lat: 42.27476047446783, lng: -71.80994571181293 },
+            { lat: 42.27479530807132, lng: -71.81005607308577 },
+            { lat: 42.27420722718166, lng: -71.81017420510972 },
+            { lat: 42.27416865881595, lng: -71.81009762421473 },
+            { lat: 42.274131082756675, lng: -71.81008139302258 },
+            { lat: 42.27408718899566, lng: -71.81012000917724 },
+            { lat: 42.27400173288487, lng: -71.81020033750963 },
+            { lat: 42.27387658331014, lng: -71.81024847933395 },
+            { lat: 42.273754410494774, lng: -71.81023459507474 },
+            { lat: 42.273640176145, lng: -71.81017779547125 },
+            { lat: 42.27354082667941, lng: -71.81006064616497 },
+            { lat: 42.27347124727617, lng: -71.8099005815144 },
+            { lat: 42.273430330078774, lng: -71.80953954852589 },
+            { lat: 42.273400940397224, lng: -71.80946900260119 },
+            { lat: 42.27335170385951, lng: -71.80944941864783 },
+            { lat: 42.272958869951175, lng: -71.80950622023772 },
+            { lat: 42.272895569617205, lng: -71.80887775388316 },
+            { lat: 42.27285598062624, lng: -71.80849646548057 },
+            { lat: 42.272796544593106, lng: -71.80811249486896 },
+            { lat: 42.27271956116664, lng: -71.80790698809369 },
+            { lat: 42.27260387584986, lng: -71.80759016964435 },
+            { lat: 42.272565880208006, lng: -71.80745187698733 },
+            { lat: 42.27253284631932, lng: -71.80730956101672 },
+            { lat: 42.27250721699261, lng: -71.80706968843856 },
+            { lat: 42.274285665003845, lng: -71.80664742564732 },
+            { lat: 42.27434554844619, lng: -71.80727275060508 },
+            { lat: 42.27439902083595, lng: -71.80726015003677 },
+            { lat: 42.274470511513044, lng: -71.80777703497028 }
+        ];
+        redBoundry = new google.maps.Polygon({
+            paths: redBoundryPoints,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map
+        });
+        var blueBoundryPoints = [
+            { lat: 42.27449035800314, lng: -71.80794132027245 },
+            { lat: 42.27476047446783, lng: -71.80994571181293 },
+            { lat: 42.27479530807132, lng: -71.81005607308577 },
+            { lat: 42.27488670381319, lng: -71.80997331530955 },
+            { lat: 42.27496302133869, lng: -71.80990287283833 },
+            { lat: 42.27500713396437, lng: -71.8098824037524 },
+            { lat: 42.27505124655918, lng: -71.80987266350252 },
+            { lat: 42.275092878336, lng: -71.80988169871574 },
+            { lat: 42.27513451008528, lng: -71.80990146276497 },
+            { lat: 42.27519395798736, lng: -71.80999463504372 },
+            { lat: 42.275215697953314, lng: -71.81001471712682 },
+            { lat: 42.275237437911784, lng: -71.81002138816484 },
+            { lat: 42.27525917786274, lng: -71.81001733036675 },
+            { lat: 42.27528091780621, lng: -71.81001059035981 },
+            { lat: 42.27563034309456, lng: -71.8096604241453 },
+            { lat: 42.27581603658456, lng: -71.8094725315762 },
+            { lat: 42.27584776138541, lng: -71.80941097392247 },
+            { lat: 42.275871547749986, lng: -71.80934673405966 },
+            { lat: 42.27595186640488, lng: -71.80923166537911 },
+            { lat: 42.27589130709182, lng: -71.80912652182877 },
+            { lat: 42.275835709236574, lng: -71.8090200371741 },
+            { lat: 42.2758589994543, lng: -71.80892964577333 },
+            { lat: 42.275959834920094, lng: -71.80882021140633 },
+            { lat: 42.27608051621394, lng: -71.80871882366637 },
+            { lat: 42.27618749478002, lng: -71.80862722610891 },
+            { lat: 42.276277202817184, lng: -71.80859148561399 },
+            { lat: 42.27633714187552, lng: -71.80855306291005 },
+            { lat: 42.27637202544016, lng: -71.80854917364712 },
+            { lat: 42.27641286275022, lng: -71.80856137763828 },
+            { lat: 42.27648064519029, lng: -71.8085991966658 },
+            { lat: 42.2765018137469, lng: -71.80859942766477 },
+            { lat: 42.27652099771165, lng: -71.80858624761868 },
+            { lat: 42.276583842506746, lng: -71.808479190257 },
+            { lat: 42.276643710367935, lng: -71.80836676847735 },
+            { lat: 42.27664503306444, lng: -71.80831871971395 },
+            { lat: 42.27630930706479, lng: -71.80793527932428 },
+            { lat: 42.27617915072045, lng: -71.80776836956295 },
+            { lat: 42.27601724050537, lng: -71.80750758248598 },
+            { lat: 42.27590651605325, lng: -71.80732396666798 },
+            { lat: 42.27547329184788, lng: -71.80629277280116 },
+            { lat: 42.275256802399376, lng: -71.80644454860942 },
+            { lat: 42.274712192508815, lng: -71.80655738651671 },
+            { lat: 42.274285665003845, lng: -71.80664742564732 },
+            { lat: 42.27434554844619, lng: -71.80727275060508 },
+            { lat: 42.27439902083595, lng: -71.80726015003677 },
+            { lat: 42.274470511513044, lng: -71.80777703497028 }
+        ];
+        blueBoundry = new google.maps.Polygon({
+            paths: blueBoundryPoints,
+            strokeColor: '#0000FF',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#0000FF',
+            fillOpacity: 0.35,
+            map: map
+        });
+    }
+
+    function showRespawnPoints() {
+        redRespawnPoint = new google.maps.Marker({
+            position: { lat: 42.273926973490276, lng: -71.8079186975956 },
+            title: 'Red Team Respawn Point',
+            map: map
+        });
+        blueRespawnPoint = new google.maps.Marker({
+            position: { lat: 42.27502051522762, lng: -71.80770143866539 },
+            title: 'Blue Team Respawn Point',
+            map: map
+        });
+    }
+
+    function limitPanning() {
+        allowedBounds = new google.maps.LatLngBounds();
+        redBoundry.getPath().getArray().forEach(function (coords) {
+            allowedBounds.extend(coords);
+        });
+        blueBoundry.getPath().getArray().forEach(function (coords) {
+            allowedBounds.extend(coords);
+        });
+        map.fitBounds(allowedBounds);
+
+        lastValidCenter = map.getCenter();
+
+        google.maps.event.addListener(map, 'center_changed', function () {
+            if (allowedBounds.contains(map.getCenter())) {
+                lastValidCenter = map.getCenter();
+                return;
+            }
+            map.panTo(lastValidCenter);
+        });
+        google.maps.event.addListener(map, 'zoom_changed', function () {
+            if (map.getZoom() < 17)
+                map.setZoom(17);
+        });
+        
+    }
+</script>
+{% endblock %}
+{% block content %}
+<h1>Rules</h1>
+<p id="author">Adopted from WPI CTF rules by James Beaulieu and Patrick Bobell</p>
+<p>
+    The goal of the game is to capture the other team's flag and bring it to the fountain to score.
+</p>
+
+<h3>FUN > Winning. Let's have some fun! Enjoy the game, and don't be a jerk.</h3>
+
+<h2>General Rules</h2>
+<ul>
+    <li>You can be tagged as soon as you cross the line into the opposing team's territory.</li>
+    <li>You can tag an opposing team member as soon as he or she enters your team's territory.</li>
+    <li>When tagging an opposing team member, tag him or her fairly lightly; don't hurt anyone!</li>
+    <li>If you are tagged, you are out and must go back to your respawn point with your hands on top of your head.</li>
+    <li>If you go out of the boundries of the game, you are out and must go back to your respawn point.</li>
+</ul>
+
+<h2>Starting the Game</h2>
+<p>
+    All participating players will be assigned a team and will be given a colored ribbon to be tied around
+    the left ankle which will mark both who is playing the game and who is on the Red and Blue teams.
+    Team captains will be choosen, who are in charge of placing the flag and in charge of making sure it is in a fair
+    location.
+    When both teams are ready, the team captains will shake hands at the fountain to signify the start of the game.
+</p>
+
+<h2>Flag location</h2>
+<ul>
+    <li>The flag must be placed in a location that the other team can find at the begging of the game.</li>
+    <li>The flag must be placed flat on the ground (e.g. it can't be balled up or put on top of something).</li>
+    <li>The flag cannot be placed in shoke point or in a corner; a game that never ends isn't fun.</li>
+</ul>
+
+<h2>Running with the Flag</h2>
+<ul>
+    <li>While running with the flag, you cannot hide the flag in your clothing.</li>
+    <li>If you are holding the opposing team's flag, you can be tagged (even on your own side!).</li>
+    <li>If you are tagged while holding the flag, the flag is dropped where you were tagged.</li>
+    <li>If you run out of bounds while holding the flag, the flag is placed inside the boundry.</li>
+</ul>
+
+<h2>Respawn Points</h2>
+<p>
+    The respawn points are two Blue Light Emergency Polls near the fountain, and are marked on the map below. 
+    Any time that you are tagged or go out of bounds, you must return to your team's respawn point and touch 
+    it to return to the game. <strong>Don't push the big red button unless there is a real emergency!</strong>
+</p>
+
+<h2>Ending the Game</h2>
+<p>
+    The game ends when either of the flags are brought back to the fountain in the center of campus. When the game
+    ends, the phrase "Olly Olly Oxen Free" will be shouted and repeated by everyone playing the game.
+    If the game needs to end silently or before a team scores, this phrase will be passed around but not shouted.
+</p>
+
+<h2>Boundries</h2>
+<p>
+    The boundries are shown on the map below. In general, no major roads or parking lots are included in the play
+    area, buildings are off-limits, the steep hills of Boynton Hill are out of bounds
+</p>
+
+<h1>Map</h1>
+<div id="map"></div>
+{% endblock %}

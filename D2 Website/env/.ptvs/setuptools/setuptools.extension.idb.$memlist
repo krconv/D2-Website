@@ -1,7 +1,12 @@
+_get_unpatched
 Library
-distutils
+re
 _Extension
+distutils
+_have_cython
+map
+functools
 Extension
 have_pyrex
 sys
-_get_unpatched
+msvc
