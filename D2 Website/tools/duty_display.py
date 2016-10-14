@@ -76,7 +76,7 @@ def name_on_duty():
                         elif (data[-5] == "x"): # a singular person is on with a WPI phone
                             result["name"] = data[:-6]
                             result["phone"] = "508-831-" + data[-4:]
-                        elif (len(data) > 12 and '-' in data[-12:]): # a singular person with a cell phone
+                        elif (len(data) > 12 and '-' in data[-12:] and not "All" in data): # a singular person with a cell phone
                             result["name"] = data[:-13]
                             result["phone"] = data[-12:]
                         else: # multiple people 

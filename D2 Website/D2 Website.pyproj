@@ -51,6 +51,9 @@
     <Compile Include="d2\wsgi.py" />
     <Compile Include="d2\__init__.py" />
     <Compile Include="manage.py" />
+    <Compile Include="d2\middleware.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="pages\admin.py" />
     <Compile Include="pages\app.py">
       <SubType>Code</SubType>
@@ -165,7 +168,6 @@
     <Folder Include="d2\" />
     <Folder Include="d2\d2\" />
     <Folder Include="d2\d2\__pycache__\" />
-    <Folder Include="middlware\" />
     <Folder Include="pages\" />
     <Folder Include="pages\migrations\" />
     <Folder Include="pages\static\" />
