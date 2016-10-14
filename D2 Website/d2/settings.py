@@ -27,12 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'aoft5+zs(8opr_jmc%!7dpqgssoygh#iog+ue@m0t+cm7&900&'
 
+DEBUG = False
 if __debug__:
     DEBUG = True
-else:
-    DEBUG = False
 
-ALLOWED_HOSTS = ['.wpi.edu']
+ALLOWED_HOSTS = ['wpi.edu']
 
 # Settings for reporting errors via email
 DEFAULT_FROM_EMAIL = "d2@wpi.edu"
@@ -59,6 +58,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'd2.middleware.IPAuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -146,6 +146,7 @@ USE_TZ = True
 
 STATIC_URL = '/~d2/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # FastCGI Configuration from http://support.hostgator.com/articles/django-with-fastcgi
 #FORCE_SCRIPT_NAME = "/~d2/"
