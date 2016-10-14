@@ -1,7 +1,0 @@
-DEFAULT_CHARSET
-JSONResponse
-TestCase
-DEBUG
-ResponseTestCase
-SECRET_KEY
-unicode_literals

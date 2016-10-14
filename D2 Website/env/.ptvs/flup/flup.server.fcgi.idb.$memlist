@@ -1,8 +1,0 @@
-__author__
-ThreadedServer
-os
-__all__
-BaseFCGIServer
-FCGI_RESPONDER
-WSGIServer
-__version__
