@@ -338,4 +338,9 @@ env/
 *.pyproj
 *.sln
 *.pubxml
-*.config
+
+# other configs
+ptvs_virtualenv_proxy.py
+web.config
+web.debug.config
+Web.WPI Storage.config
