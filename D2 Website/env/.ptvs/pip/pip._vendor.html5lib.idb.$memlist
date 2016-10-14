@@ -6,6 +6,7 @@ division
 tokenizer
 treewalkers
 treebuilders
+treeadapters
 serializer
 sanitizer
 absolute_import

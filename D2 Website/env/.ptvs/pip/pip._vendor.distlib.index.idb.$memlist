@@ -1,3 +1,4 @@
+ServerProxy
 build_opener
 tempfile
 PackageIndex
@@ -6,6 +7,7 @@ os
 cached_property
 logger
 HTTPBasicAuthHandler
+string_types
 subprocess
 logging
 DEFAULT_REALM

@@ -10,5 +10,8 @@ def links_page(request):
 def meet_us_page(request):
     return render(request, "pages/MeetUs.html");
 
+def ctf_page(request):
+    return render(request, "pages/CaptureTheFlag.html");
+
 def contact_page(request):
     return render(request, "pages/ContactUs.html");

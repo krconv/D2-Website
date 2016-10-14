@@ -43,7 +43,6 @@ def get_credentials():
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
-    return credentials
 
 def name_on_duty():
     """

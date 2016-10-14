@@ -27,13 +27,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'aoft5+zs(8opr_jmc%!7dpqgssoygh#iog+ue@m0t+cm7&900&'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if __debug__:
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['.wpi.edu']
 
 # Settings for reporting errors via email
-DEFAULT_FROM_EMAIL = "d2_webmaster@wpi.edu"
+DEFAULT_FROM_EMAIL = "d2@wpi.edu"
 ADMINS = (("Kodey Converse", 'krconverse@wpi.edu'))
 MANAGERS = ADMINS
 
