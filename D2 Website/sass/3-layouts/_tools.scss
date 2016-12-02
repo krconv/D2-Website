@@ -1,0 +1,90 @@
+﻿#tools {
+    .page-content {
+
+        .label, .value {
+            @include span-columns(4 of 8);
+            @include omega(2n);
+            @include pad(0.5rem);
+        }
+
+        .label {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .value {
+            text-align: left;
+        }
+        
+        .online {
+            color: green;
+        }
+        .offline {
+            color: red;
+        }
+
+        form {
+            label, input, textarea {
+                @include omega(2n);
+                @include pad(0.5rem);
+            }
+
+            label {
+                @include span-columns(3 of 8);
+                text-align: right;
+            }
+
+            input, textarea {
+                @include span-columns(4 of 8);
+            }
+
+            textarea {
+                resize: vertical;
+            }
+
+            input[type="checkbox"] {
+                @include margin(0.4rem 0 0 0);
+                height: 1.8rem;
+            }
+
+            input[type="submit"] {
+                @include span-columns(2 of 8);
+                @include shift(6 of 8);
+                font-size: 1.2rem;
+            }
+            .message {
+                @include span-columns(8 of 8);
+            }
+        }
+
+        .sub-content {
+            @include clearfix();
+
+            p {
+                text-align: center;
+            }
+
+            ol {
+                @include span-columns(7 of 8);
+                @include shift(1 of 8);
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        #contact {
+
+            .label {
+                @include span-columns(3 of 8);
+            }
+
+            .value {
+                @include span-columns(5 of 8);
+            }
+        }
+        
+        @media screen and (min-width: $break-medium) {
+            @include span-columns(8);
+            @include shift(2);
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{% extends "pages/base.html" %}
+
+{% block page-id %}home{% endblock %}
+{% block content %}
+<section class="posts">
+    <article class="page-content">
+        <h2 class="title">Capture the Flag!</h2>
+        <p class="author">by <author>Kodey Converse</author> on <time datetime="">October 15th, 2016</time></p>
+        <div class="content">
+            <p>
+                Join Daniels for an All-Hall Capture the Flag game this Friday night! 
+                More information is available on <a href="">the events page</a>.
+            </p>
+        </div>
+        <img />
+    </article>
+    <article class="page-content">
+        <h2 class="title">Welcome to the Daniels Hall Website!</h2>
+        <p class="author">by Kodey Converse on <time datetime="">October 1st, 2016</time></p>
+        <div class="content">
+            <p>
+                Welcome to the Daniels Hall website! This site contains some useful 
+                information about what's going on around the hall, along with events
+                that you can attend, and miscelaneous tools that you will find under the
+                tools navigation link at the top of the page.
+                Feel free to send me your feedback!
+            </p>
+        </div>
+        <img />
+    </article>
+</section>
+<aside class="widgets">
+    {% if duty %}
+    <div id="duty" class="widget page-content">
+        <h3 class="title">Who's on duty?</h3>
+        <div class="content">
+            {% if duty.name %}<p class="important">{{ duty.name }}</p>{% endif %}
+            {% if duty.room %}<p>{{ duty.room }}</p>{% endif %}
+            {% if duty.phone %}<p>{{ duty.phone }}</p>{% endif %}
+            {% if duty.info %}<p class="important">{{ duty.info }}</p>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if minecraft %}
+    <div id="minecraft" class="widget page-content">
+        <h3 class="title">Minecraft Server</h3>
+        <div class="content">
+            {% if minecraft.status %}<p class="important">Server is <em class="{% if minecraft.is_online %}online{% else %}offline{% endif %}">{{ minecraft.status}}</em></p>{% endif %}
+            {% if minecraft.address %}<p>Address: {{ minecraft.address }}</p>{% endif %}
+            {% if minecraft.players %}<p>Players: {{ minecraft.players.online }}{% if minecraft.players.max %} / {{ minecraft.players.max }}{% endif %}</p>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+</aside>
+{% endblock %}

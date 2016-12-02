@@ -1,15 +1,15 @@
 from django.conf.urls import url
-import django_cas_ng
-from . import views
 
+from django_cas_ng import views as cas_views
+
+from pages.views import *
 
 urlpatterns = [
-    url(r'^$', views.home_page),
-    url(r'^home$', views.home_page, name='home'),
-    url(r'^ctf$', views.ctf_page, name='ctf'),
-    url(r'^links$', views.links_page, name='useful_links'),
-    url(r'^meet$', views.meet_us_page, name='meet_us'),
-    url(r'^contact$', views.contact_page, name='contact_us'),
-    url(r'^login/$', django_cas_ng.views.login),
-    url(r'^logout/$', django_cas_ng.views.logout), 
+    url(r'^$', home_page, name='home'),
+    url(r'^home/$', home_page),
+    url(r'^events/$', events_page, name='events'),
+    url(r'^tools/$', tools_page, name='tools'),
+    url(r'^tools/auth$', auth_page),
+    url(r'^caslogin/$', cas_views.login, name='login'),
+    url(r'^caslogout/$', cas_views.logout, name='logout'), 
 ]
