@@ -53,5 +53,5 @@ def get_spreadsheet(spreadsheet_id, range):
     service = discovery.build('sheets', 'v4', http=http,
                                 discoveryServiceUrl=discoveryUrl)
     spreadsheet = service.spreadsheets().values().get(
-        spreadsheetId=spreadsheet_id, range=sheet_range).execute()
+        spreadsheetId=spreadsheet_id, range=range).execute()
     return spreadsheet.get('values', []) # contains all of the data

@@ -1,0 +1,90 @@
+{% extends "pages/base.html" %}
+
+{% block page-id %}tools{% endblock %}
+{% block content %}
+<div id="contact" class="page-content">
+    <h2 class="title">Contact</h2>
+    <section class="content">
+        <div class="sub-content">
+            <div class="important label">Resident Advisor on Duty</div>
+            <div class="value">
+                {% if duty.name %}<p>{{ duty.name }}</p>{% endif %}
+                {% if duty.room %}<p>{{ duty.room }}</p>{% endif %}
+                {% if duty.phone %}<p>{{ duty.phone }}</p>{% endif %}
+                {% if duty.info %}<p>{{ duty.info }}</p>{% endif %}
+            </div>
+            <div class="label">WPI Campus Police</div>
+            <div class="value">
+                <p>(508) 831-5555 (emergency)</p>
+                <p>(508) 831-5555 (non-emergency)</p>
+            </div>
+            <div class="label">WPI Health Services</div>
+            <div class="value">
+                <p>(508) 831-5555 (main)</p>
+                <p>(508) 831-5555 (on-call)</p>
+            </div>
+        </div>
+        {% if contact_form %}
+        <h3 class="subtitle">Send Us a Message</h3>
+        <div class="sub-content">
+            <form id="contact-form" method="post" action="#contact">
+                {{ contact_form.form }}
+                {% if contact_form.message %}<p class="message">{{ contact_form.message }}</p>{% endif %}
+                {% csrf_token %}
+                <input type="submit" value="Send" />
+            </form>
+        </div>
+        {% endif %}
+    </section>
+</div>
+<div id="minecraft" class="page-content">
+    <h2 class="title">Minecraft Server</h2>
+    <section class="content">
+        <h3 class="subtitle">Status</h3>
+        <div class="sub-content">
+            {% if minecraft_status.status %}
+            <div class="label">Status</div>
+            <div class="value {% if minecraft_status.is_online %}online{% else %}offline{% endif %}">{{ minecraft_status.status }}</div>
+            {% endif %}
+            {% if minecraft_status.address %}
+            <div class="label">Address</div>
+            <div class="value">{{ minecraft_status.address }}</div>
+            {% endif %}
+            {% if minecraft_status.players %}
+            <div class="label">Players</div>
+            <div class="value">{{ minecraft_status.players.online }}{% if minecraft_status.players.max %} / {{ minecraft_status.players.max }}{% endif %}</div>
+            {% endif %}
+            {% if minecraft_status.secs_ago %}
+            <div class="label">Last Checked</div>
+            <div class="value">{{ minecraft_status.secs_ago }} second{{ minecraft_status.secs_ago|pluralize }} ago</div>
+            {% elif minecraft_status.mins_ago %}
+            <div class="label">Last Checked</div>
+            <div class="value">{{ minecraft_status.mins_ago }} minute{{ minecraft_status.mins_ago|pluralize }} ago</div>
+            {% endif %}
+        </div>
+        <h3 class="subtitle">Rules</h3>
+        <div class="sub-content">
+            <ol>
+                <li>No Griefing</li>
+            </ol>
+            <div class="disclaimer">
+                <p>Users violating the rules will be banned permenantly.</p>
+            </div>
+        </div>
+        <h3 class="subtitle">Registration</h3>
+        <div class="sub-content">
+            {% if minecraft_register %}
+            <p class="disclaimer">Your password will be stored in plain text, and you will have to enter it into the game...so don't choose something too secret!</p>
+            <form method="post" action="#minecraft">
+                {{ minecraft_register.form }}
+                {% if minecraft_register.message %}<p class="message">{{ minecraft_register.message }}</p>{% endif %}
+                {% csrf_token %}
+                <input type="submit" value="Register" />
+            </form>
+            {% else %}
+            <p class="disclaimer">You can't register a user. Are you signed in?</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

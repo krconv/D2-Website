@@ -1,49 +1,43 @@
 """
-Django settings for d2 project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.8/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.8/ref/settings/
+Django settings for D2 Webiste project.
 """
 
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
 
-# Use PyMySQL as MySQL adapter
-try:
-    import pymysql
-    pymysql.install_as_MySQLdb()
-except ImportError:
-    pass
+WEBSITE_TITLE = "Daniels Website"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'aoft5+zs(8opr_jmc%!7dpqgssoygh#iog+ue@m0t+cm7&900&'
 
 DEBUG = False
-if __debug__:
-    DEBUG = True
 
 ALLOWED_HOSTS = ['wpi.edu']
 
 # Settings for reporting errors via email
-DEFAULT_FROM_EMAIL = "d2@wpi.edu"
-ADMINS = (("Kodey Converse", 'krconverse@wpi.edu'))
-MANAGERS = ADMINS
+DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'd2@wpi.edu'
+ADMINS = MANAGERS = (("Kodey Converse", 'krconverse@wpi.edu'))
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'submission.wpi.edu'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'd2'
+EMAIL_HOST_PASSWORD = 'D2istheb0mb'
+EMAIL_SUBJECT_PREFIX = "[%s]" % WEBSITE_TITLE
+EMAIL_USE_TLS = True
+
 
 # Application definition
 INSTALLED_APPS = [
-    'pages.app.PagesConfig',
-    'tools.app.ToolsConfig',
+    'pages',
     'django_cas_ng',
-    'django_ajax',
+    #'django_ajax',
+    'django_cron',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,10 +59,13 @@ MIDDLEWARE_CLASSES = [
     'django_cas_ng.middleware.CASMiddleware',
 ]
 
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'django_cas_ng.backends.CASBackend',
-)
+    'django_cas_ng.backends.CASBackend'
+]
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 
 ROOT_URLCONF = 'd2.urls'
 
@@ -92,10 +89,10 @@ WSGI_APPLICATION = 'd2.wsgi.application'
 
 # CAS Authentication Settings
 # https://github.com/castlabs/django-cas
-CAS_SERVER_URL = 'https://cas.wpi.edu/cas/'
+#CAS_SERVER_URL = 'https://cas.wpi.edu/cas/'
 
 # Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -107,6 +104,16 @@ DATABASES = {
     }
 }
 
+# Cron Jobs
+# 
+CRON_CLASSES = [
+    "tools.cron.UpdateDutyScheduleJob",
+    "tools.cron.UpdateServerStatusJob",
+]
+
+# Minecraft Server Settings
+MINECRAFT_SERVER_HOST = 'steve.dyn.wpi.edu'
+MINECRAFT_SERVER_DOWNTIME_ALERT = 10
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -140,13 +147,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# FastCGI Configuration from http://support.hostgator.com/articles/django-with-fastcgi
+FORCE_SCRIPT_NAME = '/~d2/'
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/~d2/static/'
+STATIC_URL = FORCE_SCRIPT_NAME + 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
-# FastCGI Configuration from http://support.hostgator.com/articles/django-with-fastcgi
-#FORCE_SCRIPT_NAME = "/~d2/"
