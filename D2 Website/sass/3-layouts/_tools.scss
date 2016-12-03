@@ -19,14 +19,19 @@
         .online {
             color: green;
         }
+
         .offline {
             color: red;
         }
 
         form {
-            label, input, textarea {
+            label, input, textarea, div {
                 @include omega(2n);
                 @include pad(0.5rem);
+            }
+
+            div {
+                @include pad(0.25rem);
             }
 
             label {
@@ -34,7 +39,7 @@
                 text-align: right;
             }
 
-            input, textarea {
+            input, textarea, div {
                 @include span-columns(4 of 8);
             }
 
@@ -54,6 +59,15 @@
             }
             .message {
                 @include span-columns(8 of 8);
+                margin: 10px;
+                display: none;
+                font: {
+                    style: italic;
+                    size: 1.6rem;
+                }
+            }
+            .error {
+                color: red;
             }
         }
 

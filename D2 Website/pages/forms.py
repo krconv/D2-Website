@@ -10,6 +10,10 @@ class MinecraftUserForm(forms.ModelForm):
         fields = ['username', 'password']
         labels = {
             'username': "Username",
+            'password': "Password"
+        }
+        widgets = {
+            'password': forms.TextInput(attrs={ 'type' : 'password' })
         }
 
 class ContactForm(forms.Form):
@@ -18,4 +22,4 @@ class ContactForm(forms.Form):
     """
     name = forms.CharField(label="Name", max_length=50, required=False)
     email = forms.EmailField(label="Email", required=False)
-    message = forms.CharField(label="Message", widget=forms.Textarea)
+    message = forms.CharField(label="Message", widget=forms.Textarea(attrs={ 'required': True }))
