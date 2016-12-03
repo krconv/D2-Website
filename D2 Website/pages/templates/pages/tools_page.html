@@ -1,6 +1,37 @@
 {% extends "pages/base.html" %}
 
+{% load staticfiles %}
+
 {% block page-id %}tools{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+<script type="text/javascript">
+    function initialize() {
+        $('form').submit(function (event) {
+            messageBox = $('.message', this);
+            submitButton = $('input[type="submit"]', this).prop('disabled', true);
+            ajaxMethod($(this).attr('method'), $(this).attr('action'), $(this).serialize(), function(content) {
+                messageBox.html(content['message']).hide().slideDown().delay(5000).slideUp();
+                if (content['is_error']) {
+                    // the incomming message is an error
+                    messageBox.addClass('error');
+                } else {
+                    messageBox.removeClass('error');
+                }
+                messageBox = $('.message', this);
+                submitButton.removeAttr('disabled');
+            });
+            event.preventDefault();
+        });
+    }
+    $(document).ready(function () {
+        initialize();
+    });
+</script>
+{% endblock %}
 {% block content %}
 <div id="contact" class="page-content">
     <h2 class="title">Contact</h2>
@@ -27,10 +58,13 @@
         {% if contact_form %}
         <h3 class="subtitle">Send Us a Message</h3>
         <div class="sub-content">
-            <form id="contact-form" method="post" action="#contact">
-                {{ contact_form.form }}
-                {% if contact_form.message %}<p class="message">{{ contact_form.message }}</p>{% endif %}
+            <form id="contact-form" method="post">
                 {% csrf_token %}
+                <input type="hidden" name="contact_form" />
+                {{ contact_form.form }}
+                <label>Robot Check:</label>
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-size="compact"></div>
+                <p class="message"></p>
                 <input type="submit" value="Send" />
             </form>
         </div>
@@ -73,13 +107,18 @@
         </div>
         <h3 class="subtitle">Registration</h3>
         <div class="sub-content">
-            {% if minecraft_register %}
-            <p class="disclaimer">Your password will be stored in plain text, and you will have to enter it into the game...so don't choose something too secret!</p>
-            <form method="post" action="#minecraft">
-                {{ minecraft_register.form }}
-                {% if minecraft_register.message %}<p class="message">{{ minecraft_register.message }}</p>{% endif %}
+            {% if minecraft_form %}
+            <p>Use the form below to register or change your Minecraft registration.</p>
+            <p class="disclaimer">You cannot change your username after choosen.</p>
+            <p class="disclaimer">Your password will be stored in plain text, so don't choose something too secret!</p>
+            <form id="minecraft-form" method="post">
                 {% csrf_token %}
-                <input type="submit" value="Register" />
+                <input type="hidden" name="minecraft_form" />
+                {{ minecraft_form.form }}
+                <label>Robot Check:</label>
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-size="compact"></div>
+                <p class="message">{% if minecraft_form.message %}{{ minecraft_form.message }}{% endif %}</p>
+                <input type="submit" value="{{ minecraft_form.action|title }}" />
             </form>
             {% else %}
             <p class="disclaimer">You can't register a user. Are you signed in?</p>
