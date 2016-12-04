@@ -375,3 +375,5 @@ paket-files/
 /D2 Website/sass/koala-config.json
 *.json
 /D2 Website/compilerconfig.json.defaults
+D2 Website/d2/settings.py
+*.config
