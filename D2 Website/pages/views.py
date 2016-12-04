@@ -29,10 +29,7 @@ def minecraft_context(request):
     if status:
         context['status'] = status.status
         context['is_online'] = status.is_online
-        if (status.how_long_ago().seconds < 60):
-            context['secs_ago'] = (int)(status.how_long_ago().seconds)
-        else:
-            context['mins_ago'] = (int)(status.how_long_ago().seconds / 60)
+        context['date'] = status.date
         if request.user.has_perm('pages.minecraft_server_address'):
             context['address'] = settings.MINECRAFT_SERVER_HOST
         if request.user.has_perm('pages.minecraft_server_players_count') and status.is_online:
@@ -59,6 +56,7 @@ Pages
 def home_page(request):
     "Displays the home page."
     context = base_context(request)
+    context['posts'] = models.SitePost.objects.order_by('date')[:3]
     context['duty'] = duty_context(request)
     context['minecraft'] = minecraft_context(request)
     context['page_title'] = "Home"
@@ -111,6 +109,7 @@ def tools_page_post(request):
         # the recaptcha failed
         return { 'message' : "reCAPTCHA verification failed" , 'is_error' : True }
 
+    is_error = False
     if 'minecraft_form' in request.POST:
         # user submitted a registration request
         form = forms.MinecraftUserForm(request.POST)
