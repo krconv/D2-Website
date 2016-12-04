@@ -39,6 +39,9 @@ class DutyShift(models.Model):
         else: # no shift is active
             return None
 
+    def __str__(self):
+        return self.date.strftime('%m/%d/%y') + " (%s)" % self.name;
+
     class Meta:
         permissions = (
             ('duty_display', "Can see the duty display"),
@@ -52,7 +55,7 @@ class MinecraftUser(models.Model):
     """
     A Minecraft account that is associated with a WPI user.
     """
-    username = models.CharField(max_length=16, verbose_name="in-game username")
+    username = models.CharField(max_length=16, unique=True, verbose_name="in-game username")
     password = models.CharField(max_length=32, verbose_name="password")
     owner = models.ForeignKey(User, verbose_name="owner")
     banned = models.BooleanField(default=False, verbose_name="banned")
@@ -64,9 +67,11 @@ class MinecraftUser(models.Model):
         for c in self.username:
             if c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-':
                 return False
-        if MinecraftUser.objects.filter(username__iexact=self.username).exists():
-            return False;
         return True
+
+    def has_owner(self):
+        "Returns whether this user has an owner"
+        return self.owner_id is not None
 
     def __str__(self):
         return self.username;
@@ -95,6 +100,9 @@ class MinecraftServerPing(models.Model):
         "Gets the latest known status of the server."
         return MinecraftServerPing.objects.latest('date')
     
+    def __str__(self):
+        return self.date.strftime('%m/%d/%y %H:%S') + " (%s)" % self.status;
+
     class Meta:
         permissions = (
             ('minecraft_status_address', "Can view the server host"),
@@ -103,3 +111,15 @@ class MinecraftServerPing(models.Model):
             ('minecraft_status_players_names', "Can view the server's online player names"),
         )
 
+# Blog tools
+class SitePost(models.Model):
+    """
+    A post which can be written by an author, with a title, date and body.
+    """
+    date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=30)
+    author = models.CharField(max_length=50)
+    content = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return self.title + " (%s)" % self.date.strftime('%m/%d/%y');

@@ -3,31 +3,16 @@
 {% block page-id %}home{% endblock %}
 {% block content %}
 <section class="posts">
+    {% for post in posts %}
     <article class="page-content">
-        <h2 class="title">Capture the Flag!</h2>
-        <p class="author">by <author>Kodey Converse</author> on <time datetime="">October 15th, 2016</time></p>
+        <h2 class="title">{{ post.title }}</h2>
+        <p class="author">by <author>{{ post.author }}</author> on <time datetime="{{ post.date|date:"c" }}">{{ post.date|date:"F jS, Y" }}</time></p>
         <div class="content">
-            <p>
-                Join Daniels for an All-Hall Capture the Flag game this Friday night! 
-                More information is available on <a href="">the events page</a>.
-            </p>
+            {{ post.content|safe }}
         </div>
         <img />
     </article>
-    <article class="page-content">
-        <h2 class="title">Welcome to the Daniels Hall Website!</h2>
-        <p class="author">by Kodey Converse on <time datetime="">October 1st, 2016</time></p>
-        <div class="content">
-            <p>
-                Welcome to the Daniels Hall website! This site contains some useful 
-                information about what's going on around the hall, along with events
-                that you can attend, and miscelaneous tools that you will find under the
-                tools navigation link at the top of the page.
-                Feel free to send me your feedback!
-            </p>
-        </div>
-        <img />
-    </article>
+    {% endfor %}
 </section>
 <aside class="widgets">
     {% if duty %}
