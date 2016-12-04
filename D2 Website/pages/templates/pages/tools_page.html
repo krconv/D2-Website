@@ -1,12 +1,13 @@
 {% extends "pages/base.html" %}
 
 {% load staticfiles %}
+{% load humanize %}
 
 {% block page-id %}tools{% endblock %}
 {% block scripts %}
 {{ block.super }}
-<script src='https://www.google.com/recaptcha/api.js'></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src='https://www.google.com/recaptcha/api.js?onload=recaptcha&render=explicit'></script>
 <script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
 <script type="text/javascript">
     function initialize() {
@@ -21,6 +22,8 @@
                 } else {
                     messageBox.removeClass('error');
                 }
+                grecaptcha.reset(0);
+                grecaptcha.reset(1);
                 messageBox = $('.message', this);
                 submitButton.removeAttr('disabled');
             });
@@ -30,6 +33,11 @@
     $(document).ready(function () {
         initialize();
     });
+    var recaptcha = function() {
+        data = { 'sitekey' : '{{ recaptcha_site_key }}', 'size' : 'compact' }
+        grecaptcha.render('contact-recaptcha', data);
+        grecaptcha.render('minecraft-recaptcha', data);
+    }
 </script>
 {% endblock %}
 {% block content %}
@@ -63,7 +71,7 @@
                 <input type="hidden" name="contact_form" />
                 {{ contact_form.form }}
                 <label>Robot Check:</label>
-                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-size="compact"></div>
+                <div id="contact-recaptcha" class="recaptcha"></div>
                 <p class="message"></p>
                 <input type="submit" value="Send" />
             </form>
@@ -88,18 +96,17 @@
             <div class="label">Players</div>
             <div class="value">{{ minecraft_status.players.online }}{% if minecraft_status.players.max %} / {{ minecraft_status.players.max }}{% endif %}</div>
             {% endif %}
-            {% if minecraft_status.secs_ago %}
+            {% if minecraft_status.date %}
             <div class="label">Last Checked</div>
-            <div class="value">{{ minecraft_status.secs_ago }} second{{ minecraft_status.secs_ago|pluralize }} ago</div>
-            {% elif minecraft_status.mins_ago %}
-            <div class="label">Last Checked</div>
-            <div class="value">{{ minecraft_status.mins_ago }} minute{{ minecraft_status.mins_ago|pluralize }} ago</div>
+            <div class="value">{{ minecraft_status.date|naturaltime }}</div>
             {% endif %}
         </div>
         <h3 class="subtitle">Rules</h3>
         <div class="sub-content">
             <ol>
                 <li>No Griefing</li>
+                <li>No Cheating</li>
+                <li>Be Nice</li>
             </ol>
             <div class="disclaimer">
                 <p>Users violating the rules will be banned permenantly.</p>
@@ -116,7 +123,7 @@
                 <input type="hidden" name="minecraft_form" />
                 {{ minecraft_form.form }}
                 <label>Robot Check:</label>
-                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-size="compact"></div>
+                <div id="minecraft-recaptcha" class="recaptcha"></div>
                 <p class="message">{% if minecraft_form.message %}{{ minecraft_form.message }}{% endif %}</p>
                 <input type="submit" value="{{ minecraft_form.action|title }}" />
             </form>

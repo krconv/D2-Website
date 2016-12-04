@@ -25,15 +25,15 @@
         }
 
         form {
-            label, input, textarea, div {
+            label, input, textarea {
                 @include omega(2n);
                 @include pad(0.5rem);
             }
-
-            div {
-                @include pad(0.25rem);
+            .recaptcha {
+                @include omega(2n);
+                @include pad(0.5rem 0 0 0);
+                height: 150px;
             }
-
             label {
                 @include span-columns(3 of 8);
                 text-align: right;
