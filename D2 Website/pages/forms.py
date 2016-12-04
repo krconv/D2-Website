@@ -1,5 +1,5 @@
 from django import forms
-from pages.models import MinecraftUser
+from pages.models import *
 
 class MinecraftUserForm(forms.ModelForm):
     """
@@ -23,3 +23,14 @@ class ContactForm(forms.Form):
     name = forms.CharField(label="Name", max_length=50, required=False)
     email = forms.EmailField(label="Email", required=False)
     message = forms.CharField(label="Message", widget=forms.Textarea(attrs={ 'required': True }))
+
+class SitePostForm(forms.ModelForm):
+    """
+    A form for editing a site post.
+    """
+    class Meta:
+        model = SitePost
+        fields = ['title', 'author', 'content']
+        widgets = {
+            'content': forms.Textarea()
+        }

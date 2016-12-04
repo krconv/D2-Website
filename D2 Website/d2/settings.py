@@ -12,7 +12,7 @@ WEBSITE_TITLE = "Daniels Website"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'aoft5+zs(8opr_jmc%!7dpqgssoygh#iog+ue@m0t+cm7&900&'
+SECRET_KEY = 'aoft5+zs(8opr_jmc%!7dpqgssoygh#iog+ue@mdt+cm7&900&'
 
 DEBUG = False
 
@@ -20,7 +20,7 @@ ALLOWED_HOSTS = ['wpi.edu']
 
 # Settings for reporting errors via email
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'd2@wpi.edu'
-ADMINS = MANAGERS = (("Kodey Converse", 'krconverse@wpi.edu'))
+ADMINS = MANAGERS = (("Kodey Converse", 'krconverse@wpi.edu'),)
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -28,7 +28,7 @@ EMAIL_HOST = 'submission.wpi.edu'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'd2'
 EMAIL_HOST_PASSWORD = 'D2istheb0mb'
-EMAIL_SUBJECT_PREFIX = "[%s]" % WEBSITE_TITLE
+EMAIL_SUBJECT_PREFIX = "[%s] " % WEBSITE_TITLE
 EMAIL_USE_TLS = True
 
 
@@ -36,13 +36,14 @@ EMAIL_USE_TLS = True
 INSTALLED_APPS = [
     'pages',
     'django_cas_ng',
-    #'django_ajax',
+    'django_ajax',
     'django_cron',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
 ]
 
@@ -110,6 +111,11 @@ CRON_CLASSES = [
     "tools.cron.UpdateDutyScheduleJob",
     "tools.cron.UpdateServerStatusJob",
 ]
+
+# reCAPTCHA Settings
+RECAPTCHA_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
+RECAPTCHA_SITE_KEY = '6Lc6xQ0UAAAAADExUak9UZ5FpxReG0TXnUVD8kQZ'
+RECAPTCHA_SECRET_KEY = '6Lc6xQ0UAAAAAItJ1UdRdHBiNDRCA81621Bvsny6'
 
 # Minecraft Server Settings
 MINECRAFT_SERVER_HOST = 'steve.dyn.wpi.edu'
