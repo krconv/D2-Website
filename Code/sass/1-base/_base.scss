@@ -1,0 +1,211 @@
+﻿html {
+    height: 100%;
+
+    font: {
+        size: 14px;
+        family: $font-family1;
+    }
+
+    @media screen and (max-width: $break-medium) {
+        font-size: 12px;
+    }
+
+    @media screen and (max-width: $break-small) {
+        font-size: 2.5vw;
+    }
+
+    body {
+        @include margin(0);
+        height: 100%;
+        background: $color-background;
+
+        a {
+            color: inherit;
+
+            &:hover {
+                color: $color-accent2;
+            }
+        }
+
+        .not-active {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        #header,
+        #footer {
+            @include linear-gradient($color-primary, $color-primary-gradient);
+            color: $color-content;
+            box-shadow: 0 0 3rem -1rem black;
+            width: 100%;
+        }
+
+        #header {
+            height: 10rem;
+            position: relative;
+            font-weight: 700;
+            top: 0;
+            @include transition(height 500ms);
+
+            #title, #nav {
+                position: absolute;
+                bottom: 1.5rem;
+                line-height: 1;
+            }
+
+            #title {
+                @include margin(0);
+                font-size: 5rem;
+                left: 3rem;
+                @include transition(bottom 500ms);
+                
+                @media screen and (max-width: $break-medium) {
+                    font-size: 4rem;
+                }
+                @media screen and (max-width: $break-small) {
+                    font-size: 3rem;
+                }
+            }
+
+            #nav {
+                right: 3rem;
+                display: flex;
+                font-size: 2.5rem;
+
+                a {
+                    text: {
+                        transform: lowercase;
+                        decoration: none;
+                    }
+
+                    & + a {
+                        margin-left: 1rem;
+                    }
+                }
+            }
+
+            @media screen and (max-width: $break-large) {
+                height: 12rem;
+
+                #title {
+                    bottom: 4rem;
+                }
+
+                #nav {
+                    font-size: 2.0rem;
+                }
+            }
+        }
+
+        .page-container {
+            @include outer-container();
+            @include calc(min-height, "100vh - 15rem");
+            @include padding(1rem);
+            box-shadow: 0 0 3rem -1rem black;
+            background: #3E3E3e;
+            @media screen and (max-width: $break-large) {
+                @include calc(min-height, "100% - 17rem");
+            }
+
+            .title {
+                color: $color-accent2;
+            }
+
+            .content {
+                color: $color-content;
+            }
+
+            .important {
+                font-size: larger;
+            }
+
+            .page-content { // any container on the page
+                @include margin(1.5rem 0);
+                @include pad(0.5rem);
+                @include fill-parent();
+                background: $color-accent1;
+                color: $color-content;
+                border: 1px solid #555558;
+                line-height: 1.2;
+
+                * {
+                    @include margin(0);
+                }
+
+                input, textarea {
+                    border: none;
+                    background: $color-form;
+
+                    font: {
+                        family: inherit;
+                        size: 1.2rem;
+                    }
+                }
+
+                    input[type=submit] {
+                        @include margin(0.8rem);
+                        @include pad(0.3rem 0.8rem);
+                        background: $color-form;
+                    }
+
+                .title {
+                    @include pad(0.3rem);
+
+                    font: {
+                        size: 2.5rem;
+                        weight: 600;
+                    }
+                }
+
+                .subtitle {
+                    @include pad(0.5rem);
+
+                    font: {
+                        size: 2.1rem;
+                        weight: 500;
+                    }
+                }
+
+                .disclaimer, .author {
+                    @include pad(0 0.3rem 0.3rem 0.8rem);
+                    color: shade($color-content, 30%);
+                    font-size: 1.3rem;
+                }
+
+                .disclaimer {
+                    text-align: center;
+                }
+
+                .content {
+                    @include margin(0);
+                    @include pad(1.5rem);
+
+                    font: {
+                        weight: 400;
+                        size: 1.8rem;
+                    }
+                }
+
+                em, strong {
+                    color: tint($color-content, 20%);
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                }
+            }
+        }
+
+            #footer, .page-container:after {
+                height: 5rem;
+            }
+
+        #footer {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            font-size: 1.2rem;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{% extends "pages/base.html" %}
+
+{% block page-id %}home{% endblock %}
+{% block content %}
+<section class="posts">
+    {% for post in posts %}
+    <article class="page-content">
+        <h2 class="title">{{ post.title }}</h2>
+        <p class="author">by <author>{{ post.author }}</author> on <time datetime="{{ post.date|date:"c" }}">{{ post.date|date:"F jS, Y" }}</time></p>
+        <div class="content">
+            {{ post.content|safe }}
+        </div>
+        <img />
+    </article>
+    {% endfor %}
+</section>
+<aside class="widgets">
+    {% if duty %}
+    <div id="duty" class="widget page-content">
+        <h3 class="title">Who's on duty?</h3>
+        <div class="content">
+            {% if duty.name %}<p class="important">{{ duty.name }}</p>{% endif %}
+            {% if duty.room %}<p>{{ duty.room }}</p>{% endif %}
+            {% if duty.phone %}<p>{{ duty.phone }}</p>{% endif %}
+            {% if duty.info %}<p class="important">{{ duty.info }}</p>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if minecraft_status %}
+    <div id="minecraft" class="widget page-content">
+        <h3 class="title">Minecraft Server</h3>
+        <div class="content">
+            {% if minecraft_status.status %}
+            <div class="label">Status</div>
+            <div class="value {% if minecraft_status.is_online %}online{% else %}offline{% endif %}">{{ minecraft_status.status }}</div>
+            {% endif %}
+            {% if minecraft_status.address %}
+            <div class="label">Address</div>
+            <div class="value">{{ minecraft_status.address }}</div>
+            {% endif %}
+            {% if minecraft_status.players %}
+            <div class="label">Players</div>
+            <div class="value">{{ minecraft_status.players.online }}{% if minecraft_status.players.max %} / {{ minecraft_status.players.max }}{% endif %}</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</aside>
+{% endblock %}

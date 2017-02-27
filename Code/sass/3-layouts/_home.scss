@@ -1,0 +1,65 @@
+﻿#home {
+    
+    .posts, .widgets {
+        @include omega();
+    }
+
+    .posts {
+        @include span-columns(8 of 12);
+
+        @media screen and (max-width: $break-medium) {
+            @include fill-parent();
+        }
+    }
+
+    .widgets {
+        @include span-columns(4);
+
+        .widget {
+            .title {
+                @include pad(0.2rem);
+
+                font: {
+                    weight: 500;
+                    size: 1.8rem;
+                }
+            }
+
+            .content {
+                @include margin(0);
+                @include pad(0.3rem);
+                @include clearfix();
+
+                font: {
+                    weight: 400;
+                    size: 1.5rem;
+                }
+                .label, .value {
+                    @include omega(2n);
+                    @include pad(0.5rem);
+                }
+
+                .label {
+                    @include span-columns(4 of 12);
+                    font-weight: 500;
+                    text-align: right;
+                }
+                .value {
+                    @include span-columns(8 of 12);
+                }
+
+                .online {
+                    color: green;
+                }
+
+                .offline {
+                    color: red;
+                }
+                    }
+                }
+        
+        @media screen and (max-width: $break-medium) {
+            display: none;
+        }
+    }
+}
