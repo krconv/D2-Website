@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -7,7 +8,7 @@ from django.core.mail import mail_managers
 
 import mcstatus
 import requests
-from dns.resolver import query
+from dns import resolver
 from django_ajax.decorators import ajax
 from Daniels_Website.settings import common as settings
 from . import models
@@ -32,7 +33,7 @@ def minecraft_context(request):
         context['is_online'] = status.is_online
         context['version'] = status.version
         context['date'] = status.date
-        if request.user.has_perm('pages.minecraft_server_address'):
+        if request.user.has_perm('pages.minecraft_status_address'):
             context['address'] = settings.MINECRAFT_SERVER_HOST
         if request.user.has_perm('pages.minecraft_status_players_count') and status.is_online:
             context['players'] = {}
@@ -170,7 +171,7 @@ def auth_page(request):
     # make sure that the request is coming from the minecraft server
     is_from_minecraft_server = False
     try:
-        server_ip = str(query(settings.MINECRAFT_SERVER_HOST)[0])
+        server_ip = str(resolver.query(settings.MINECRAFT_SERVER_HOST)[0])
         is_from_minecraft_server = request.META.get('REMOTE_ADDR') == server_ip
     except Exception as e:
         pass
@@ -180,19 +181,23 @@ def auth_page(request):
         if not user.exists():
             # nothing is true if the player doesn't exist
             return HttpResponse(False)
-        user = user.first()
+
         # handle the query that was sent
-        if request.GET['q'] == 'canJoin':
+        user = user.first()
+        query = request.GET['q']
+        if query == 'canJoin':
             result = not user.banned
-        elif request.GET['q'] == 'isRegistered':
+        elif query == 'isRegistered':
             result = True
-        elif request.GET['q'] == 'isBanned':
+        elif query == 'isBanned':
             result = user.banned
-        elif request.GET['q'] == 'canAuthenticate':
+        elif query == 'canAuthenticate':
             if 'password' in request.GET:
                 result = user.password == request.GET['password']
             else:
                 result = False
+        elif query == 'getOwner':
+            result = user.owner.username
         else:
             result = ""
         return HttpResponse(result)

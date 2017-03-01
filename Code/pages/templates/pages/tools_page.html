@@ -123,7 +123,7 @@
             <p class="disclaimer">If you have bought the game, skip step 2.</p>
             <ol>
                 <li>Register a in-game username below.</li>
-                <li>Download a free Minecraft launcher <a href="{% static 'Minecraft.exe' %}">here</a>.</li>
+                <li>Download a free Minecraft launcher <a href="{% static 'Minecraft.exe' %}">here (for Windows)</a> or <a href="{% static 'Minecraft.jar' %}">here (for Mac/Linux)</a>.</li>
                 <li>Add the username that you registered to the launcher.</li>
                 {% if minecraft_status.version %}<li>Start the game in version <strong>{{ minecraft_status.version }}</strong>.</li>{% endif %}
                 <li>Add {% if minecraft_status.address %}<strong>{{ minecraft_status.address }}</strong>{% else %}the server{% endif %} to the multiplayer menu.</li>
