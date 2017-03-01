@@ -7,10 +7,13 @@
     <InterpreterId>{ce2b15ea-0df9-4264-9a25-00a76d6314c0}</InterpreterId>
     <InterpreterVersion>3.4</InterpreterVersion>
     <PublishUrl>\\storage.wpi.edu\homes\d2\Daniels_Website.pending\</PublishUrl>
-    <NameOfLastUsedPublishProfile>Development</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>Daniels Website</NameOfLastUsedPublishProfile>
     <IsWindowsApplication>False</IsWindowsApplication>
     <PythonDebugWebServerCommandArguments>runserver --settings=Daniels_Website.settings.dev 0.0.0.0:%SERVER_PORT% $(CommandLineArguments)</PythonDebugWebServerCommandArguments>
     <PythonRunWebServerCommandArguments>runserver --settings=Daniels_Website.settings.dev 0.0.0.0:%SERVER_PORT% $(CommandLineArguments)</PythonRunWebServerCommandArguments>
+    <WebBrowserPort>8080</WebBrowserPort>
+    <WebBrowserUrl>
+    </WebBrowserUrl>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -84,6 +87,9 @@
       <Publish>True</Publish>
     </Content>
     <Content Include="pages\static\Minecraft.exe">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\Minecraft.jar">
       <Publish>True</Publish>
     </Content>
     <Content Include="tools\sheets.googleapis.com-python-quickstart.json">
