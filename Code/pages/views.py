@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import mail_managers
+from django.contrib.auth.models import User
 
 import mcstatus
 import requests
@@ -33,9 +34,9 @@ def minecraft_context(request):
         context['is_online'] = status.is_online
         context['version'] = status.version
         context['date'] = status.date
-        if request.user.has_perm('pages.minecraft_status_address'):
+        if request_has_perm(request, 'pages.minecraft_status_address'):
             context['address'] = settings.MINECRAFT_SERVER_HOST
-        if request.user.has_perm('pages.minecraft_status_players_count') and status.is_online:
+        if request_has_perm(request, 'pages.minecraft_status_players_count') and status.is_online:
             context['players'] = {}
             context['players']['online'] = status.player_count_online
             context['players']['max'] = status.player_count_max
@@ -47,7 +48,7 @@ def duty_context(request):
     shift = models.DutyShift.get_current_shift()
     if shift:
         context['name'] = shift.name
-        if request.user.has_perm('pages.duty_phone') and shift.phone:
+        if request_has_perm(request, 'pages.duty_phone') and shift.phone:
             context['phone'] = shift.phone
     else:
         context['info'] = "No RA on duty"
@@ -78,7 +79,7 @@ def tools_page(request):
     context['duty'] = duty_context(request)
     context['minecraft_status'] = minecraft_context(request)
     # add the minecraft registration form if the user is allowed to see it
-    if (request.user.has_perm('pages.minecraft_register')):
+    if (request_has_perm(request, 'pages.minecraft_register')):
         # user is allowed to have a minecraft registration
         context['minecraft_form'] = {}
         context['minecraft_form']['form'] = forms.MinecraftUserForm()
@@ -202,3 +203,18 @@ def auth_page(request):
             result = ""
         return HttpResponse(result)
     return tools_page(request)
+
+"""
+Helper Functions
+"""
+def request_has_perm(request, permission):
+    """ Determines whether a request has a given permission. """
+    user = request.user
+    if not user.is_authenticated():
+        # see if the user is on WPI network
+        user_ip = request.META['REMOTE_ADDR']
+        subnet_prefix = str(resolver.query('wpi.edu')[0]).rsplit('.', 2)[0]
+        if user_ip.startswith(subnet_prefix): # WPI user
+            user = User.objects.get(username='wpi_anonymous')
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+    return user.has_perm(permission)
