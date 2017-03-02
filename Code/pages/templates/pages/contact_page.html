@@ -1,0 +1,80 @@
+{% extends "pages/base.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block page-id %}contact{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src='https://www.google.com/recaptcha/api.js?onload=recaptcha&render=explicit'></script>
+<script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+<script type="text/javascript">
+    function initialize() {
+        $('form').submit(function (event) {
+            messageBox = $('.message', this);
+            submitButton = $('input[type="submit"]', this).prop('disabled', true);
+            ajaxMethod($(this).attr('method'), $(this).attr('action'), $(this).serialize(), function(content) {
+                messageBox.html(content['message']).hide().slideDown().delay(5000).slideUp();
+                if (content['is_error']) {
+                    // the incomming message is an error
+                    messageBox.addClass('error');
+                } else {
+                    messageBox.removeClass('error');
+                }
+                submitButton.removeAttr('disabled');
+                messageBox = $('.message', this);
+                grecaptcha.reset();
+            });
+            event.preventDefault();
+        });
+    }
+    $(document).ready(function () {
+        initialize();
+    });
+    var recaptcha = function() {
+        data = { 'sitekey' : '{{ recaptcha_site_key }}', 'size' : 'compact' }
+        grecaptcha.render('recaptcha', data);
+    }
+</script>
+{% endblock %}
+{% block content %}
+<div class="page-content">
+    <h2 class="title">Contact</h2>
+    <section class="content">
+        <div class="sub-content">
+            <div class="important label">Resident Advisor on Duty</div>
+            <div class="value">
+                {% if duty.name %}<p>{{ duty.name }}</p>{% endif %}
+                {% if duty.room %}<p>{{ duty.room }}</p>{% endif %}
+                {% if duty.phone %}<p>{{ duty.phone }}</p>{% endif %}
+                {% if duty.info %}<p>{{ duty.info }}</p>{% endif %}
+            </div>
+            <div class="label">WPI Campus Police</div>
+            <div class="value">
+                <p>(508) 831-5555 (emergency)</p>
+                <p>(508) 831-5433 (non-emergency)</p>
+            </div>
+            <div class="label">WPI Health Services</div>
+            <div class="value">
+                <p>(508) 831-5520 (main)</p>
+                <p>(508) 334-8830 (on-call)</p>
+            </div>
+        </div>
+        {% if contact_form %}
+        <h3 class="subtitle">Send Us a Message</h3>
+        <div class="sub-content">
+            <form id="contact-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="contact_form" />
+                {{ contact_form.form }}
+                <label>Robot Check:</label>
+                <div id="recaptcha" class="recaptcha"></div>
+                <div class="message">{% if minecraft_form.message %}{{ minecraft_form.message }}{% endif %}</div>
+                <input type="submit" value="Send" />
+            </form>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

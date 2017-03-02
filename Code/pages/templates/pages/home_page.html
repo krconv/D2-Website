@@ -34,10 +34,6 @@
             <div class="label">Status</div>
             <div class="value {% if minecraft_status.is_online %}online{% else %}offline{% endif %}">{{ minecraft_status.status }}</div>
             {% endif %}
-            {% if minecraft_status.address %}
-            <div class="label">Address</div>
-            <div class="value">{{ minecraft_status.address }}</div>
-            {% endif %}
             {% if minecraft_status.players %}
             <div class="label">Players</div>
             <div class="value">{{ minecraft_status.players.online }}{% if minecraft_status.players.max %} / {{ minecraft_status.players.max }}{% endif %}</div>

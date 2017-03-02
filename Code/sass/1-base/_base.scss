@@ -58,10 +58,11 @@
                 font-size: 5rem;
                 left: 3rem;
                 @include transition(bottom 500ms);
-                
+
                 @media screen and (max-width: $break-medium) {
                     font-size: 4rem;
                 }
+
                 @media screen and (max-width: $break-small) {
                     font-size: 3rem;
                 }
@@ -103,6 +104,7 @@
             @include padding(1rem);
             box-shadow: 0 0 3rem -1rem black;
             background: #3E3E3e;
+
             @media screen and (max-width: $break-large) {
                 @include calc(min-height, "100% - 17rem");
             }
@@ -117,6 +119,14 @@
 
             .important {
                 font-size: larger;
+            }
+            
+            .sub-list {
+                font-size: smaller;
+            }
+
+            .no-bullet {
+                list-style-type: none;
             }
 
             .page-content { // any container on the page
@@ -173,6 +183,7 @@
                 }
 
                 .disclaimer {
+                    @include margin(1rem 0 0 0);
                     text-align: center;
                 }
 

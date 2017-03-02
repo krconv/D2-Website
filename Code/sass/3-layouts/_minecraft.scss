@@ -1,0 +1,110 @@
+﻿#minecraft {
+    .page-content {
+        @include span-columns(12);
+
+        .label, .value {
+            @include span-columns(6);
+            @include omega(2n);
+            @include pad(0.5rem);
+        }
+
+        .label {
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .online {
+            color: green;
+        }
+
+        .offline {
+            color: red;
+        }
+
+        .sub-content {
+            @include clearfix();
+
+            .sub-list {
+                @include margin(0.5rem 0 0 0);
+
+                img {
+                    @include size(15rem);
+                    transition: all .2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(2.5);
+                    }
+                }
+            }
+
+            ol {
+                @include margin(2rem 0);
+                @include span-columns(11);
+                @include shift(1);
+            }
+
+            li + li {
+                @include margin(1.5rem 0 0 0);
+            }
+        }
+
+        form {
+            @include margin(2rem 0);
+
+            label, input, textarea {
+                @include omega(2n);
+                @include pad(0.5rem);
+            }
+
+            .recaptcha {
+                @include omega(2n);
+                @include pad(0.5rem 0 0 0);
+                height: 150px;
+            }
+
+            label {
+                @include span-columns(5);
+                text-align: right;
+            }
+
+            input, textarea, div {
+                @include span-columns(4);
+
+                @media screen and (max-width: $break-medium) {
+                    @include span-columns(7);
+                }
+            }
+
+            textarea {
+                resize: vertical;
+            }
+
+            input[type="checkbox"] {
+                @include margin(0.4rem 0 0 0);
+                height: 1.8rem;
+            }
+
+            input[type="submit"] {
+                @include span-columns(2 of 8);
+                @include shift(6 of 8);
+                font-size: 1.2rem;
+            }
+
+            .message {
+                @include fill-parent();
+                margin: 10px;
+                text-align: center;
+                display: none;
+
+                font: {
+                    style: italic;
+                    size: 1.6rem;
+                }
+            }
+
+            .error {
+                color: red;
+            }
+        }
+    }
+}

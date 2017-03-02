@@ -1,5 +1,4 @@
-﻿#tools {
-
+﻿#contact {
     .page-content {
         @include span-columns(12);
 
@@ -72,9 +71,11 @@
                 @include shift(6 of 8);
                 font-size: 1.2rem;
             }
-
+            
             .message {
+                @include fill-parent();
                 margin: 10px;
+                text-align: center;
                 display: none;
 
                 font: {
