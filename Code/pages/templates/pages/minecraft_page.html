@@ -1,0 +1,164 @@
+{% extends "pages/base.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block page-id %}minecraft{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src='https://www.google.com/recaptcha/api.js?onload=recaptcha&render=explicit'></script>
+<script type="text/javascript" src="{% static 'django_ajax/js/jquery.ajax.min.js' %}"></script>
+<script type="text/javascript">
+    function initialize() {
+        $('form').submit(function (event) {
+            messageBox = $('.message', this);
+            submitButton = $('input[type="submit"]', this).prop('disabled', true);
+            ajaxMethod($(this).attr('method'), $(this).attr('action'), $(this).serialize(), function(content) {
+                messageBox.html(content['message']).hide().slideDown().delay(5000).slideUp();
+                if (content['is_error']) {
+                    // the incomming message is an error
+                    messageBox.addClass('error');
+                } else {
+                    messageBox.removeClass('error');
+                }
+                submitButton.removeAttr('disabled');
+                messageBox = $('.message', this);
+                grecaptcha.reset();
+            });
+            event.preventDefault();
+        });
+    }
+    $(document).ready(function () {
+        initialize();
+    });
+    var recaptcha = function() {
+        data = { 'sitekey' : '{{ recaptcha_site_key }}', 'size' : 'compact' }
+        grecaptcha.render('recaptcha', data);
+    }
+</script>
+{% endblock %}
+{% block content %}
+<div class="page-content">
+    <h2 class="title">Minecraft Server</h2>
+    <section class="content">
+        <h3 class="subtitle">Status</h3>
+        <div class="sub-content">
+            {% if minecraft_status.status %}
+            <div class="label">Status</div>
+            <div class="value {% if minecraft_status.is_online %}online{% else %}offline{% endif %}">{{ minecraft_status.status }}</div>
+            {% endif %}
+            {% if minecraft_status.version %}
+            <div class="label">Version</div>
+            <div class="value">Minecraft {{ minecraft_status.version }}</div>
+            {% endif %}
+            {% if minecraft_status.address %}
+            <div class="label">Address</div>
+            <div class="value">{{ minecraft_status.address }}</div>
+            {% endif %}
+            {% if minecraft_status.players %}
+            <div class="label">Players</div>
+            <div class="value">{{ minecraft_status.players.online }}{% if minecraft_status.players.max %} / {{ minecraft_status.players.max }}{% endif %}</div>
+            {% endif %}
+            {% if minecraft_status.date %}
+            <div class="label">Last Checked</div>
+            <div class="value">{{ minecraft_status.date|naturaltime }}</div>
+            {% endif %}
+        </div>
+        <h3 class="subtitle">Rules</h3>
+        <div class="sub-content">
+            <ol>
+                <li>No Griefing
+                    <ul>
+                        <li>Don't steal or destroy something that isn't yours.</li>
+                    </ul>
+                </li>
+                <li>No Cheating</li>
+                <li>Be Nice
+                    <ul>
+                        <li>Just try to have some fun and respect others!</li>
+                    </ul>
+                </li>
+            </ol>
+            <div class="disclaimer">
+                <p>Users violating the rules will be banned permenantly.</p>
+            </div>
+        </div>
+        <h3 id="registration" class="subtitle">Registration</h3>
+        <div class="sub-content">
+            {% if minecraft_form %}
+            <p>Use the form below to register or change your Minecraft registration.</p>
+            <p class="disclaimer">You cannot change your username after choosen.</p>
+            <p class="disclaimer">Your password will be stored in plain text, so don't choose something too secret!</p>
+            <form id="minecraft-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="minecraft_form" />
+                {{ minecraft_form.form }}
+                <label>Robot Check:</label>
+                <div id="recaptcha" class="recaptcha"></div>
+                <div class="message">{% if minecraft_form.message %}{{ minecraft_form.message }}{% endif %}</div>
+                <input type="submit" value="{{ minecraft_form.action|title }}" />
+            </form>
+            {% else %}
+            <p class="disclaimer">You can't register a user. {% if not user.is_authenticated %}<a href="{% url 'login' %}">Sign in</a> to continue.{% else %}Only {{ website_title }} residents can join.{% endif %}</p>
+            {% endif %}
+        </div>
+        <h3 id="howtoplay" class="subtitle">How to Play</h3>
+        <div class="sub-content">
+            <p>To play on the {{ website_title }} Minecraft server, follow these instructions.</p>
+            <ol>
+                <li>Register an in-game username <a href="#registration">above</a>.
+                    <ul class="sub-list">
+                        <li>You must be a {{ website_title }} resident to register.</li>
+                    </ul>
+                </li>
+                <li>Download a Minecraft launcher <a href="{% static 'minecraft/Minecraft.exe' %}">here (for Windows)</a> or <a href="{% static 'minecraft/Minecraft.jar' %}">here (for Mac/Linux)</a>.
+                    <ul class="sub-list">
+                        <li>This cracked launcher will let you play without buying the game.</li>
+                        <li>You will need to install Java if you are prompted to.</li>
+                        <li class="no-bullet">
+                            <img src="{% static 'minecraft/screenshot/install_java.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/start.jpg' %}" />
+                        </li>
+                    </ul>
+                </li>
+                <li>Add the username that you registered to the launcher.
+                    <ul class="sub-list">
+                        <li class="no-bullet">
+                            <img src="{% static 'minecraft/screenshot/manage_accounts.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/add_account.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/save_account.jpg' %}" />
+                        </li>
+                    </ul>
+                </li>
+                {% if minecraft_status.version %}
+                <li>Start the game in version <strong>{{ minecraft_status.version }}</strong>.
+                    <ul class="sub-list">
+                        <li class="no-bullet">
+                            <img src="{% static 'minecraft/screenshot/choose_version.jpg' %}" />
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                <li>Add {% if minecraft_status.address %}<strong>{{ minecraft_status.address }}</strong>{% else %}the server{% endif %} to the multiplayer menu.
+                    <ul class="sub-list">
+                        <li class="no-bullet">
+                            <img src="{% static 'minecraft/screenshot/open_multiplayer.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/add_server.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/save_server.jpg' %}" />
+                        </li>
+                    </ul>
+                </li>
+                <li>Connect to the server and enter your registered password.
+                    <ul class="sub-list">
+                        <li class="no-bullet">
+                            <img src="{% static 'minecraft/screenshot/join_server.jpg' %}" />
+                            <img src="{% static 'minecraft/screenshot/enter_password.jpg' %}" />
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </section>
+</div>
+{% endblock %}

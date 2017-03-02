@@ -86,12 +86,52 @@
     <Content Include="pages\static\favicon.ico">
       <Publish>True</Publish>
     </Content>
-    <Content Include="pages\static\Minecraft.exe">
+    <Content Include="pages\static\minecraft\Minecraft.exe">
       <Publish>True</Publish>
     </Content>
-    <Content Include="pages\static\Minecraft.jar">
+    <Content Include="pages\static\minecraft\Minecraft.jar">
       <Publish>True</Publish>
     </Content>
+    <Content Include="pages\static\minecraft\screenshot\add_account.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\add_server.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\choose_version.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\enter_password.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\install_java.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\join_server.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\manage_accounts.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\open_multiplayer.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\save_account.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\save_server.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\start.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\static\minecraft\screenshot\start_game.jpg">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="pages\templates\pages\minecraft_page.html">
+      <Publish>True</Publish>
+    </Content>
+    <Content Include="sass\3-layouts\_minecraft.scss" />
     <Content Include="tools\sheets.googleapis.com-python-quickstart.json">
       <Publish>True</Publish>
     </Content>
@@ -224,10 +264,10 @@
     <Content Include="sass\3-layouts\_events.scss" />
     <Content Include="sass\3-layouts\_home.scss" />
     <Content Include="sass\3-layouts\_layouts-dir.scss" />
-    <Content Include="sass\3-layouts\_tools.scss" />
+    <Content Include="sass\3-layouts\_contact.scss" />
     <Content Include="sass\pages.scss" />
     <Content Include="pages\templates\pages\CaptureTheFlag.html" />
-    <Content Include="pages\templates\pages\tools_page.html">
+    <Content Include="pages\templates\pages\contact_page.html">
       <Publish>True</Publish>
     </Content>
     <Content Include="pages\templates\pages\home_page.html">
@@ -249,6 +289,8 @@
     <Folder Include="Daniels_Website\" />
     <Folder Include="Daniels_Website\settings\" />
     <Folder Include="pages\static\css\" />
+    <Folder Include="pages\static\minecraft\" />
+    <Folder Include="pages\static\minecraft\screenshot\" />
     <Folder Include="sass\" />
     <Folder Include="pages\" />
     <Folder Include="pages\migrations\" />
